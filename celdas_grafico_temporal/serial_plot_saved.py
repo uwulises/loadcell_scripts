@@ -113,8 +113,9 @@ try:
             line_7_ax.set_data(x_data, y7_data)
             line_8_ax.set_data(x_data, y8_data)
             line_9_ax.set_data(x_data, y9_data)
-
             ax.set_xlim(max(0, x_data[-1] - 100), x_data[-1])
+            ax.set_ylim(min(np.min(y1_data), np.min(y2_data), np.min(y3_data), np.min(y4_data), np.min(y5_data), np.min(y6_data), np.min(y7_data), np.min(y8_data), np.min(y9_data))*0.9,
+                        max(np.max(y1_data), np.max(y2_data), np.max(y3_data), np.max(y4_data), np.max(y5_data), np.max(y6_data), np.max(y7_data), np.max(y8_data), np.max(y9_data))*1.1)
             ax.legend(['Celda 1', 'Celda 2', 'Celda 3', 'Celda 4', 'Celda 5', 'Celda 6', 'Celda 7', 'Celda 8', 'Celda 9'], loc='upper left')
             fig.canvas.draw()
             fig.canvas.flush_events()
