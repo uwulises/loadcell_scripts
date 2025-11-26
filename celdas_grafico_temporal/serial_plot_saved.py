@@ -7,7 +7,7 @@ import numpy as np
 import json
 import pandas as pd
 # Serial port configuration
-serial_port = '/dev/tty.usbmodem1422201'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
+serial_port = '/dev/tty.usbmodem1412201'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
 baud_rate = 57600
 timeout = 5
 
@@ -18,6 +18,12 @@ fig, ax = plt.subplots()
 line_ax, = ax.plot([])
 line_2_ax, = ax.plot([])
 line_3_ax, = ax.plot([])
+line_4_ax, = ax.plot([])
+line_5_ax, = ax.plot([])
+line_6_ax, = ax.plot([])
+line_7_ax, = ax.plot([])
+line_8_ax, = ax.plot([])
+line_9_ax, = ax.plot([])
 ax.set_xlim(0, 100)
 ax.set_title('Celda de carga')
 ax.set_xlabel('Tiempo (s)')
@@ -27,18 +33,31 @@ ax.grid()
 button = plt.Button(plt.axes([0.8, 0.05, 0.15, 0.075]), 'Save data')
 
 x_data = np.array([])
-y_data = np.array([])
+y1_data = np.array([])
 y2_data = np.array([])
 y3_data = np.array([])
+y4_data = np.array([])
+y5_data = np.array([])
+y6_data = np.array([])
+y7_data = np.array([])
+y8_data = np.array([])
+y9_data = np.array([])
 
 def save_data(event):
     # example data
     datos_tiempo = x_data
-    datos_celda_1 = y_data
+    datos_celda_1 = y1_data
     datos_celda_2 = y2_data
+    datos_celda_3 = y3_data
+    datos_celda_4 = y4_data
+    datos_celda_5 = y5_data
+    datos_celda_6 = y6_data
+    datos_celda_7 = y7_data
+    datos_celda_8 = y8_data
+    datos_celda_9 = y9_data
 
     # create a pandas DataFrame from the data
-    df = pd.DataFrame({'Tiempo': datos_tiempo, 'Celda_1': datos_celda_1, 'Celda_2': datos_celda_2, 'Celda_3': y3_data})
+    df = pd.DataFrame({'Tiempo': datos_tiempo, 'Celda_1': datos_celda_1, 'Celda_2': datos_celda_2, 'Celda_3': datos_celda_3, 'Celda_4': datos_celda_4, 'Celda_5': datos_celda_5, 'Celda_6': datos_celda_6, 'Celda_7': datos_celda_7, 'Celda_8': datos_celda_8, 'Celda_9': datos_celda_9})
     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     # save the DataFrame to a CSV file
     df.to_csv('datos_celdas_{}.csv'.format(timestamp), index=False)
@@ -76,14 +95,27 @@ try:
             celda_8 = float(data_dict["celda_8"])
             celda_9 = float(data_dict["celda_9"])
             x_data = np.append(x_data, time.time() - start_time)
-            y_data = np.append(y_data, celda_1)
+            y1_data = np.append(y1_data, celda_1)
             y2_data = np.append(y2_data, celda_2)
             y3_data = np.append(y3_data, celda_3)
-            line_ax.set_data(x_data, y_data)
+            y4_data = np.append(y4_data, celda_4)
+            y5_data = np.append(y5_data, celda_5)
+            y6_data = np.append(y6_data, celda_6)
+            y7_data = np.append(y7_data, celda_7)
+            y8_data = np.append(y8_data, celda_8)
+            y9_data = np.append(y9_data, celda_9)
+            line_ax.set_data(x_data, y1_data)
             line_2_ax.set_data(x_data, y2_data)
             line_3_ax.set_data(x_data, y3_data)
+            line_4_ax.set_data(x_data, y4_data)
+            line_5_ax.set_data(x_data, y5_data)
+            line_6_ax.set_data(x_data, y6_data)
+            line_7_ax.set_data(x_data, y7_data)
+            line_8_ax.set_data(x_data, y8_data)
+            line_9_ax.set_data(x_data, y9_data)
+
             ax.set_xlim(max(0, x_data[-1] - 100), x_data[-1])
-            ax.set_ylim(min(y_data)*0.9, max(y_data)*1.1)
+            ax.legend(['Celda 1', 'Celda 2', 'Celda 3', 'Celda 4', 'Celda 5', 'Celda 6', 'Celda 7', 'Celda 8', 'Celda 9'], loc='upper left')
             fig.canvas.draw()
             fig.canvas.flush_events()
 
