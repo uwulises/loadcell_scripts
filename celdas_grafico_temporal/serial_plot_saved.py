@@ -7,7 +7,7 @@ import numpy as np
 import json
 import pandas as pd
 # Serial port configuration
-serial_port = '/dev/tty.usbmodem1412201'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
+serial_port = '/dev/tty.usbmodem1422201'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
 baud_rate = 57600
 timeout = 5
 
