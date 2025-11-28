@@ -7,8 +7,8 @@ import numpy as np
 import json
 import pandas as pd
 # Serial port configuration
-serial_port = '/dev/tty.usbmodem1412201'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
-baud_rate = 57600
+serial_port = '/dev/tty.usbmodem1422301'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
+baud_rate = 115200
 timeout = 5
 
 # List to store all data for saving to CSV
@@ -76,7 +76,7 @@ try:
         line = ser.readline().decode('utf-8', errors='ignore').strip()
         if not line:
             continue
-        elif line.startswith('{'):
+        elif line.startswith('{') and line.endswith('}'):
             try:
                 # Parse the JSON data
                 data_dict = json.loads(line)
@@ -122,7 +122,8 @@ try:
 
 
 except serial.SerialException as e:
-    print(f"Error opening serial port {serial_port}: {e}")
+    print(f"Serial error: {e}")
+    save_data(None)
 except KeyboardInterrupt:
     print("Program terminated by user.")
     save_data(None)
