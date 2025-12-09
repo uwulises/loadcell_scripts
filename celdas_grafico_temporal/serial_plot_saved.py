@@ -82,15 +82,15 @@ try:
                 # Parse the JSON data
                 data_dict = json.loads(line)
                 # Extract the values from the JSON data
-                celda_1 = (float(data_dict["celda_1"])-234500)/823500.0
-                celda_2 = (float(data_dict["celda_2"])-314500)/855500.0
-                celda_3 = (float(data_dict["celda_3"])-184000)/832500.0
-                celda_4 = (float(data_dict["celda_4"])-166000)/860000.0
-                celda_5 = (float(data_dict["celda_5"])- 109000)/843400.0
-                celda_6 = (float(data_dict["celda_6"])-167300)/848700.0
+                celda_1 = (float(data_dict["celda_1"])-234500)/823.5
+                celda_2 = (float(data_dict["celda_2"])-314500)/855.5
+                celda_3 = (float(data_dict["celda_3"])-184000)/832.5
+                celda_4 = (float(data_dict["celda_4"])-166000)/860
+                celda_5 = (float(data_dict["celda_5"])- 109000)/843.4
+                celda_6 = (float(data_dict["celda_6"])-167300)/848.7
                 celda_7 = float(data_dict["celda_7"])
-                celda_8 = (float(data_dict["celda_8"])- 97500)/859500.0
-                celda_9 = (float(data_dict["celda_9"])-31100)/858100.0
+                celda_8 = (float(data_dict["celda_8"])- 97500)/859.5
+                celda_9 = (float(data_dict["celda_9"])-31100)/858.1
                 x_data = np.append(x_data, time.time() - start_time)
                 y1_data = np.append(y1_data, celda_1)
                 y2_data = np.append(y2_data, celda_2)
@@ -113,7 +113,8 @@ try:
                 fig.canvas.draw()
                 fig.canvas.flush_events()
                 ax.set_xlim(max(0, x_data[-1] - 100), x_data[-1])
-                ax.set_ylim(0,10000)
+                ax.set_ylim(min(np.min(y1_data), np.min(y2_data), np.min(y3_data), np.min(y4_data), np.min(y5_data), np.min(y6_data), np.min(y7_data), np.min(y8_data), np.min(y9_data)) - 10,
+                             max(np.max(y1_data), np.max(y2_data), np.max(y3_data), np.max(y4_data), np.max(y5_data), np.max(y6_data), np.max(y7_data), np.max(y8_data), np.max(y9_data)) + 10)
             except json.JSONDecodeError as e:
                 print(e)
                 continue  # Skip invalid JSON
