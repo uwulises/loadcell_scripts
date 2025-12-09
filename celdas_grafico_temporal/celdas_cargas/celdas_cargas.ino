@@ -12,6 +12,15 @@
 #define LOADCELL_SCK_PIN_4 9
 #define LOADCELL_DOUT_PIN_5 10
 #define LOADCELL_SCK_PIN_5 11
+#define LOADCELL_DOUT_PIN_6 14
+#define LOADCELL_SCK_PIN_6 15
+#define LOADCELL_DOUT_PIN_7 16
+#define LOADCELL_SCK_PIN_7 17
+#define LOADCELL_DOUT_PIN_8 18
+#define LOADCELL_SCK_PIN_8 19
+#define LOADCELL_DOUT_PIN_9 20
+#define LOADCELL_SCK_PIN_9 21
+
 
 
 
@@ -30,10 +39,10 @@ HX711 scale_2;
 HX711 scale_3;
 HX711 scale_4;
 HX711 scale_5;
-// HX711 scale_6;
-// HX711 scale_7;
-// HX711 scale_8;
-// HX711 scale_9;
+HX711 scale_6;
+HX711 scale_7;
+HX711 scale_8;
+HX711 scale_9;
 
 void setup() {
   Serial.begin(115200);
@@ -44,10 +53,10 @@ void setup() {
   scale_3.begin(LOADCELL_DOUT_PIN_3, LOADCELL_SCK_PIN_3);
   scale_4.begin(LOADCELL_DOUT_PIN_4, LOADCELL_SCK_PIN_4);
   scale_5.begin(LOADCELL_DOUT_PIN_5, LOADCELL_SCK_PIN_5);
-  // scale_6.begin(LOADCELL_DOUT_PIN_6, LOADCELL_SCK_PIN_6);
-  // scale_7.begin(LOADCELL_DOUT_PIN_7, LOADCELL_SCK_PIN_7);
-  // scale_8.begin(LOADCELL_DOUT_PIN_8, LOADCELL_SCK_PIN_8);
-  // scale_9.begin(LOADCELL_DOUT_PIN_9, LOADCELL_SCK_PIN_9);
+  scale_6.begin(LOADCELL_DOUT_PIN_6, LOADCELL_SCK_PIN_6);
+  scale_7.begin(LOADCELL_DOUT_PIN_7, LOADCELL_SCK_PIN_7);
+  scale_8.begin(LOADCELL_DOUT_PIN_8, LOADCELL_SCK_PIN_8);
+  scale_9.begin(LOADCELL_DOUT_PIN_9, LOADCELL_SCK_PIN_9);
 }
 
 void loop() {
@@ -58,10 +67,10 @@ void loop() {
   read_3 = scale_3.read();
   read_4 = scale_4.read();
   read_5 = scale_5.read();
-  // read_6 = scale_6.read();
-  // read_7 = scale_7.read();
-  // read_8 = scale_8.read();
-  // read_9 = scale_9.read();
+  read_6 = scale_6.read();
+  read_7 = scale_7.read();
+  read_8 = scale_8.read();
+  read_9 = scale_9.read();
   
   doc["celda_1"] = read_1;
   doc["celda_2"] = read_2;
