@@ -88,7 +88,7 @@ try:
                 celda_4 = (float(data_dict["celda_4"])-166000)/860
                 celda_5 = (float(data_dict["celda_5"])- 109000)/843.4
                 celda_6 = (float(data_dict["celda_6"])-167300)/848.7
-                celda_7 = float(data_dict["celda_7"])
+                celda_7 = (float(data_dict["celda_7"])-143700)/838.3
                 celda_8 = (float(data_dict["celda_8"])- 97500)/859.5
                 celda_9 = (float(data_dict["celda_9"])-31100)/858.1
                 x_data = np.append(x_data, time.time() - start_time)
