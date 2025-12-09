@@ -85,8 +85,8 @@ try:
                 celda_1 = (float(data_dict["celda_1"])-234500)/823500
                 celda_2 = (float(data_dict["celda_2"])-314500)/855500
                 celda_3 = (float(data_dict["celda_3"])-184000)/832500
-                celda_4 = float(data_dict["celda_4"])
-                celda_5 = float(data_dict["celda_5"])
+                celda_4 = (float(data_dict["celda_4"])-166000)/860000
+                celda_5 = (float(data_dict["celda_5"])- 109000)/843400
                 celda_6 = float(data_dict["celda_6"])
                 celda_7 = float(data_dict["celda_7"])
                 celda_8 = (float(data_dict["celda_8"])- 97500)/859500
