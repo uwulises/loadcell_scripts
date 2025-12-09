@@ -90,7 +90,7 @@ try:
                 celda_6 = (float(data_dict["celda_6"])-167300)/848700
                 celda_7 = float(data_dict["celda_7"])
                 celda_8 = (float(data_dict["celda_8"])- 97500)/859500
-                celda_9 = float(data_dict["celda_9"])
+                celda_9 = (float(data_dict["celda_9"])-31100)/858100
                 x_data = np.append(x_data, time.time() - start_time)
                 y1_data = np.append(y1_data, celda_1)
                 y2_data = np.append(y2_data, celda_2)
