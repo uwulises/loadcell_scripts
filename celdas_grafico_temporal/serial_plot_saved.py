@@ -116,8 +116,8 @@ try:
                     fig.canvas.draw()
                     fig.canvas.flush_events()
                     ax.set_xlim(max(0, x_data[-1] - 100), x_data[-1])
-                    ax.set_ylim(min(np.min(y1_data), np.min(y2_data), np.min(y3_data), np.min(y4_data), np.min(y5_data), np.min(y6_data), np.min(y7_data), np.min(y8_data), np.min(y9_data)) - 10,
-                                 max(np.max(y1_data), np.max(y2_data), np.max(y3_data), np.max(y4_data), np.max(y5_data), np.max(y6_data), np.max(y7_data), np.max(y8_data), np.max(y9_data)) + 10)
+                    ax.set_ylim(min(np.min(y1_data), np.min(y2_data), np.min(y3_data), np.min(y4_data), np.min(y5_data), np.min(y6_data), np.min(y7_data), np.min(y8_data), np.min(y9_data))* 0.9,
+                                 max(np.max(y1_data), np.max(y2_data), np.max(y3_data), np.max(y4_data), np.max(y5_data), np.max(y6_data), np.max(y7_data), np.max(y8_data), np.max(y9_data))* 1.1)
                     last_time = time.time()
             except json.JSONDecodeError as e:
                 print(e)
