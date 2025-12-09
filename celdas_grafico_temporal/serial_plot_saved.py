@@ -7,7 +7,7 @@ import numpy as np
 import json
 import pandas as pd
 # Serial port configuration
-serial_port = '/dev/tty.usbmodem1422301'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
+serial_port = '/dev/tty.usbmodem1412201'  # Replace with your Arduino's serial port (e.g., COM3 on Windows)
 baud_rate = 115200
 timeout = 5
 
@@ -24,6 +24,7 @@ line_6_ax, = ax.plot([])
 line_7_ax, = ax.plot([])
 line_8_ax, = ax.plot([])
 line_9_ax, = ax.plot([])
+ax.legend(['Celda 1', 'Celda 2', 'Celda 3', 'Celda 4', 'Celda 5', 'Celda 6', 'Celda 7', 'Celda 8', 'Celda 9'], loc='upper left')
 ax.set_xlim(0, 100)
 ax.set_title('Celda de carga')
 ax.set_xlabel('Tiempo (s)')
@@ -72,6 +73,7 @@ try:
     time.sleep(2)  # Wait for the serial port to initialize
     ser.flush()
     start_time = time.time()
+    last_time = time.time()
     while True:  
         line = ser.readline().decode('utf-8', errors='ignore').strip()
         if not line:
@@ -100,21 +102,21 @@ try:
                 y7_data = np.append(y7_data, celda_7)
                 y8_data = np.append(y8_data, celda_8)
                 y9_data = np.append(y9_data, celda_9)
-                line_ax.set_data(x_data, y1_data)
-                line_2_ax.set_data(x_data, y2_data)
-                line_3_ax.set_data(x_data, y3_data)
-                line_4_ax.set_data(x_data, y4_data)
-                line_5_ax.set_data(x_data, y5_data)
-                line_6_ax.set_data(x_data, y6_data)
-                line_7_ax.set_data(x_data, y7_data)
-                line_8_ax.set_data(x_data, y8_data)
-                line_9_ax.set_data(x_data, y9_data)
-                ax.set_xlim(max(0, x_data[-1] - 100), x_data[-1])
-                ax.set_ylim(min(np.min(y1_data), np.min(y2_data), np.min(y3_data), np.min(y4_data), np.min(y5_data), np.min(y6_data), np.min(y7_data), np.min(y8_data), np.min(y9_data))*0.9,
-                            max(np.max(y1_data), np.max(y2_data), np.max(y3_data), np.max(y4_data), np.max(y5_data), np.max(y6_data), np.max(y7_data), np.max(y8_data), np.max(y9_data))*1.1)
-                ax.legend(['Celda 1', 'Celda 2', 'Celda 3', 'Celda 4', 'Celda 5', 'Celda 6', 'Celda 7', 'Celda 8', 'Celda 9'], loc='upper left')
-                fig.canvas.draw()
-                fig.canvas.flush_events()
+                #if one second has passed, update the plot
+                if (time.time() - last_time )>= 0.5:
+                    line_ax.set_data(x_data, y1_data)
+                    line_2_ax.set_data(x_data, y2_data)
+                    line_3_ax.set_data(x_data, y3_data)
+                    line_4_ax.set_data(x_data, y4_data)
+                    line_5_ax.set_data(x_data, y5_data)
+                    line_6_ax.set_data(x_data, y6_data)
+                    line_7_ax.set_data(x_data, y7_data)
+                    line_8_ax.set_data(x_data, y8_data)
+                    line_9_ax.set_data(x_data, y9_data)
+                    fig.canvas.draw()
+                    fig.canvas.flush_events()
+                    ax.set_xlim(max(0, x_data[-1] - 100), x_data[-1])
+                    last_time = time.time()
             except json.JSONDecodeError as e:
                 print(e)
                 continue  # Skip invalid JSON
