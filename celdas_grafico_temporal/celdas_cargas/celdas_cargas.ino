@@ -21,8 +21,9 @@
 #define LOADCELL_DOUT_PIN_9 20
 #define LOADCELL_SCK_PIN_9 21
 
-
-
+// Sensor de distancia
+#define LEN_SENSOR A0
+#define PRESSURE_SENSOR A1
 
 long read_1=0;
 long read_2=0;
@@ -33,6 +34,11 @@ long read_6=0;
 long read_7=0;
 long read_8=0;
 long read_9=0;
+long len = 0;
+long pres = 0;
+
+float stroke_len = 0.0;
+float pressure = 0.0;
 
 HX711 scale_1;
 HX711 scale_2;
@@ -71,6 +77,10 @@ void loop() {
   read_7 = scale_7.read();
   read_8 = scale_8.read();
   read_9 = scale_9.read();
+  len = analogRead(LEN_SENSOR);
+  pres = analogRead(PRESSURE_SENSOR);
+  stroke_len = (len/1023.0)*100.0;
+  pressure = (pres/1023.0)*600.0;
   
   doc["celda_1"] = read_1;
   doc["celda_2"] = read_2;
@@ -81,6 +91,9 @@ void loop() {
   doc["celda_7"] = read_7;
   doc["celda_8"] = read_8;
   doc["celda_9"] = read_9;
+  doc["stroke"] = stroke_len;
+  doc["pressure"] = pressure;
+
 
   // Serialize JSON to Serial
   serializeJson(doc, Serial);

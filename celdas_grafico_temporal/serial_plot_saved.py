@@ -24,7 +24,9 @@ line_6_ax, = ax.plot([])
 line_7_ax, = ax.plot([])
 line_8_ax, = ax.plot([])
 line_9_ax, = ax.plot([])
-ax.legend(['Celda 1', 'Celda 2', 'Celda 3', 'Celda 4', 'Celda 5', 'Celda 6', 'Celda 7', 'Celda 8', 'Celda 9'], loc='upper left')
+stroke_ax, = ax.plot([])
+pressure_ax, = ax.plot([])
+ax.legend(['Celda 1', 'Celda 2', 'Celda 3', 'Celda 4', 'Celda 5', 'Celda 6', 'Celda 7', 'Celda 8', 'Celda 9','Stroke', 'Pressure'], loc='upper left')
 ax.set_xlim(0, 100)
 ax.set_title('Celda de carga')
 ax.set_xlabel('Tiempo (s)')
@@ -43,6 +45,8 @@ y6_data = np.array([])
 y7_data = np.array([])
 y8_data = np.array([])
 y9_data = np.array([])
+stroke_data = np.array([])
+pressure_data = np.array([])
 
 def save_data(event):
     # example data
@@ -56,12 +60,15 @@ def save_data(event):
     datos_celda_7 = y7_data
     datos_celda_8 = y8_data
     datos_celda_9 = y9_data
+    datos_stroke = stroke_data
+    datos_pressure = pressure_data
 
     # create a pandas DataFrame from the data
-    df = pd.DataFrame({'Tiempo': datos_tiempo, 'Celda_1': datos_celda_1, 'Celda_2': datos_celda_2, 'Celda_3': datos_celda_3, 'Celda_4': datos_celda_4, 'Celda_5': datos_celda_5, 'Celda_6': datos_celda_6, 'Celda_7': datos_celda_7, 'Celda_8': datos_celda_8, 'Celda_9': datos_celda_9})
+    df = pd.DataFrame({'Tiempo': datos_tiempo, 'Celda_1': datos_celda_1, 'Celda_2': datos_celda_2, 'Celda_3': datos_celda_3, 'Celda_4': datos_celda_4, 'Celda_5': datos_celda_5, 'Celda_6': datos_celda_6, 'Celda_7': datos_celda_7, 'Celda_8': datos_celda_8, 'Celda_9': datos_celda_9, 'Stroke': datos_stroke, 'Pressure': datos_pressure})
     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     # save the DataFrame to a CSV file
-    df.to_csv('datos_celdas_{}.csv'.format(timestamp), index=False)
+    df.to_csv('celdas_de_presion_{}.csv'.format(timestamp), index=False)
+    df.to_excel('celdas_de_presion_excel_{}.xlsx'.format(timestamp), index=False)
     print('Data saved')
     exit()
 
@@ -91,6 +98,8 @@ try:
                 celda_7 = (float(data_dict["celda_7"])-143700)/838.3
                 celda_8 = (float(data_dict["celda_8"])- 97500)/859.5
                 celda_9 = (float(data_dict["celda_9"])-31100)/858.1
+                stroke = float(data_dict["stroke"])
+                pressure = float(data_dict["pressure"])
                 x_data = np.append(x_data, time.time() - start_time)
                 y1_data = np.append(y1_data, celda_1)
                 y2_data = np.append(y2_data, celda_2)
@@ -101,6 +110,8 @@ try:
                 y7_data = np.append(y7_data, celda_7)
                 y8_data = np.append(y8_data, celda_8)
                 y9_data = np.append(y9_data, celda_9)
+                stroke_data = np.append(stroke_data, stroke)
+                pressure_data = np.append(pressure_data, pressure)
                 line_ax.set_data(x_data, y1_data)
                 line_2_ax.set_data(x_data, y2_data)
                 line_3_ax.set_data(x_data, y3_data)
@@ -110,11 +121,12 @@ try:
                 line_7_ax.set_data(x_data, y7_data)
                 line_8_ax.set_data(x_data, y8_data)
                 line_9_ax.set_data(x_data, y9_data)
+                stroke_ax.set_data(x_data, stroke_data)
+                pressure_ax.set_data(x_data, pressure_data)
                 fig.canvas.draw()
                 fig.canvas.flush_events()
                 ax.set_xlim(max(0, x_data[-1] - 100), x_data[-1])
-                ax.set_ylim(min(np.min(y1_data), np.min(y2_data), np.min(y3_data), np.min(y4_data), np.min(y5_data), np.min(y6_data), np.min(y7_data), np.min(y8_data), np.min(y9_data)) - 10,
-                             max(np.max(y1_data), np.max(y2_data), np.max(y3_data), np.max(y4_data), np.max(y5_data), np.max(y6_data), np.max(y7_data), np.max(y8_data), np.max(y9_data)) + 10)
+                ax.set_ylim(-10, max(np.max(y1_data), np.max(y2_data), np.max(y3_data), np.max(y4_data), np.max(y5_data), np.max(y6_data), np.max(y7_data), np.max(y8_data), np.max(y9_data)) + 10)
             except json.JSONDecodeError as e:
                 print(e)
                 continue  # Skip invalid JSON
